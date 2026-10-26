@@ -32,4 +32,4 @@ jobs:
           printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/natan_deploy ~/.ssh/known_hosts
           trap 'rm -f ~/.ssh/natan_deploy' EXIT
-          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -i ~/.ssh/natan_deploy -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" 'cd /opt/natan-respaldo && sh deploy/update.sh'
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -i ~/.ssh/natan_deploy -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" 'cd /opt/natan-https && test -f .deploy-private/active.json && sh deploy/update.sh'

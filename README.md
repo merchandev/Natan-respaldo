@@ -4,6 +4,8 @@ Entrega preparada el **26 de octubre de 2026** a partir del respaldo local. El c
 
 Los **61 archivos de `codigo-fuente/` se conservan byte por byte**. El servidor Node y la configuración Docker se añadieron por separado. La web y las API corren en el VPS; la aplicación sigue usando **Supabase** para PostgreSQL, autenticación y Storage. No basta con instalar MySQL o PostgreSQL sin los servicios de Supabase.
 
+**Para actualizar el contenedor existente `natan-app-1` y activar `https://natanelectronics.com`, seguir [los comandos completos de HTTPS](deploy/HTTPS.md).** El script usa el proyecto existente y detecta la red del proxy. Las instrucciones de «proyecto nuevo» de abajo corresponden al despliegue básico por puerto, no a la actualización de ese contenedor.
+
 ## Contenido completo
 
 | Ruta | Contenido |
@@ -12,6 +14,7 @@ Los **61 archivos de `codigo-fuente/` se conservan byte por byte**. El servidor 
 | `respaldo-cifrado/` | Los **2.327 archivos originales**, incluidos datos SQL/CSV/JSON, **2.238 fotos**, PDF, ZIP de entrega y todo el código |
 | `deploy/` | Adaptador Node, recuperación del respaldo, carga de fotos, pruebas y actualización del VPS |
 | `Dockerfile`, `compose.yaml` | Un contenedor independiente, HTTP en el puerto configurable 18091 |
+| `compose.https.yaml`, `deploy/enable_https.py` | Integración opcional con el Traefik existente, HTTPS y actualización conservando variables |
 | `.github/workflows/` | Validación automática y despliegue manual por SSH |
 | `INVENTARIO.json` | Cantidades y SHA-256 de cada archivo de código original |
 | `REVISION.md` | Hallazgos y límites de esta entrega |
@@ -141,7 +144,7 @@ No ejecutar `migration.sql`: es una migración antigua para tablas sin prefijo `
 
 ## 4. Desplegar desde GitHub
 
-El workflow **Desplegar en VPS Hostinger** es una alternativa al administrador Docker: usa SSH y se ejecuta manualmente desde Actions → Run workflow. Antes debe existir `/opt/natan-respaldo` en el VPS, con sus variables configuradas, y el usuario SSH debe poder actualizar esa carpeta y ejecutar Docker. Elegir un único método de administración para este proyecto; no mezclarlo con un clon diferente que hPanel gestione.
+El workflow **Desplegar en VPS Hostinger** usa SSH y se ejecuta manualmente desde Actions → Run workflow. Antes debe completarse la activación HTTPS desde `/opt/natan-https`, con `.deploy-private/active.json` presente. El usuario SSH debe poder actualizar esa carpeta y ejecutar Docker. El workflow conserva HTTPS mediante el mismo script. No mezclarlo con una definición antigua del proyecto en hPanel.
 
 Crear estos secrets en GitHub, idealmente en el environment `production`:
 
@@ -153,10 +156,10 @@ Crear estos secrets en GitHub, idealmente en el environment `production`:
 | `VPS_SSH_KEY` | Clave privada del usuario de despliegue; instalar su pública en `authorized_keys` |
 | `VPS_KNOWN_HOSTS` | Entrada de host SSH comprobada con la huella del VPS por un canal confiable |
 
-Las credenciales de la aplicación permanecen en `.env` del VPS. La clave del respaldo no se necesita para actualizar el servidor y no debe añadirse al workflow. El workflow de despliegue no se activa automáticamente al subir cambios. Para actualizar manualmente por SSH:
+En el modo HTTPS, las credenciales se conservan desde el contenedor en los archivos privados de `.deploy-private/` del VPS. La clave del respaldo no se necesita para actualizar el servidor y no debe añadirse al workflow. El workflow de despliegue no se activa automáticamente al subir cambios. Para actualizar manualmente por SSH después de activar HTTPS:
 
 ```sh
-cd /opt/natan-respaldo
+cd /opt/natan-https
 sh deploy/update.sh
 ```
 

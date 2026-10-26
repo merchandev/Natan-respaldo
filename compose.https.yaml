@@ -1,0 +1,35 @@
+# Complemento del compose.yaml. Usar la red y nombres REALES del proxy.
+services:
+  app:
+    labels:
+      traefik.enable: 'true'
+      traefik.docker.network: '${TRAEFIK_NETWORK:?Indicar la red real de Traefik}'
+      traefik.http.routers.natan-respaldo-http.rule: 'Host(`natanelectronics.com`) || Host(`www.natanelectronics.com`)'
+      traefik.http.routers.natan-respaldo-http.entrypoints: '${TRAEFIK_HTTP_ENTRYPOINT:-web}'
+      traefik.http.routers.natan-respaldo-http.middlewares: 'natan-respaldo-canonical'
+      traefik.http.routers.natan-respaldo-http.service: 'natan-respaldo-web'
+      traefik.http.routers.natan-respaldo-https.rule: 'Host(`natanelectronics.com`)'
+      traefik.http.routers.natan-respaldo-https.entrypoints: '${TRAEFIK_HTTPS_ENTRYPOINT:-websecure}'
+      traefik.http.routers.natan-respaldo-https.tls: 'true'
+      traefik.http.routers.natan-respaldo-https.tls.certresolver: '${TRAEFIK_CERT_RESOLVER:-letsencrypt}'
+      traefik.http.routers.natan-respaldo-https.service: 'natan-respaldo-web'
+      traefik.http.routers.natan-respaldo-www.rule: 'Host(`www.natanelectronics.com`)'
+      traefik.http.routers.natan-respaldo-www.entrypoints: '${TRAEFIK_HTTPS_ENTRYPOINT:-websecure}'
+      traefik.http.routers.natan-respaldo-www.tls: 'true'
+      traefik.http.routers.natan-respaldo-www.tls.certresolver: '${TRAEFIK_CERT_RESOLVER:-letsencrypt}'
+      traefik.http.routers.natan-respaldo-www.middlewares: 'natan-respaldo-canonical'
+      traefik.http.routers.natan-respaldo-www.service: 'natan-respaldo-web'
+      traefik.http.middlewares.natan-respaldo-canonical.redirectregex.regex: '^https?://(?:www\.)?natanelectronics\.com(?::[0-9]+)?/(.*)$$'
+      traefik.http.middlewares.natan-respaldo-canonical.redirectregex.replacement: 'https://natanelectronics.com/$${1}'
+      traefik.http.middlewares.natan-respaldo-canonical.redirectregex.permanent: 'true'
+      traefik.http.services.natan-respaldo-web.loadbalancer.server.port: '3000'
+      traefik.http.services.natan-respaldo-web.loadbalancer.healthcheck.path: '/healthz'
+    networks:
+      default: {}
+      proxy:
+        aliases:
+          - natan-respaldo-web
+networks:
+  proxy:
+    external: true
+    name: '${TRAEFIK_NETWORK:?Indicar la red real de Traefik}'

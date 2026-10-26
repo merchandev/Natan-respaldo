@@ -19,6 +19,7 @@ jobs:
       - run: node --test deploy/server.test.cjs
       - run: node deploy/verify.mjs
       - run: node --test deploy/compose.test.mjs
+      - run: python3 -m unittest discover -s deploy -p 'test_https.py'
       - run: docker compose -p natan-ci up -d --build --wait --wait-timeout 90
         env:
           NATAN_BIND_ADDRESS: 127.0.0.1

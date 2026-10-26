@@ -8,6 +8,8 @@ La aplicación contiene HTML/JavaScript sin compilación, funciones CommonJS par
 
 ### Ajuste para el VPS compartido
 
+La integración HTTPS posterior está en `compose.https.yaml` y `deploy/enable_https.py`. El Compose básico conserva el arranque independiente por puerto; el script conecta únicamente la app existente a la red real del proxy, añade reglas limitadas a los dos dominios y reutiliza su emisor ACME. No se verificó emisión de certificados en el VPS desde el entorno local: el script comprueba ese resultado al ejecutarse en el servidor. Consultar `deploy/HTTPS.md`.
+
 El primer intento en Hostinger construyó y arrancó la aplicación, pero falló al montar `deploy/Caddyfile`: el archivo no estaba disponible como archivo en el directorio de ejecución `/docker/natan`. Se eliminó el servicio Caddy y el montaje; también se eliminó la dependencia obligatoria de `.env`, usando variables explícitas de Compose compatibles con el panel.
 
 El proyecto predeterminado es `natan-respaldo`, separado de `natan-electronics`. No utiliza IP fija ni redes externas, volúmenes del host o nombres globales de contenedor. Traefik queda deshabilitado para este contenedor y no se publican 80/443. El puerto 18091 no figura entre los publicados en la captura; su disponibilidad real debe verificarse en el VPS. El contenedor tiene límites de CPU, memoria y procesos, pero la construcción de la imagen también consume recursos.

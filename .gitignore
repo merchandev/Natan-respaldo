@@ -10,3 +10,5 @@ verificacion-respaldo/
 *.tmp
 datos/
 entrega-original/
+.deploy-private/
+__pycache__/
