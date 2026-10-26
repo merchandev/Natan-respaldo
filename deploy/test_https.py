@@ -6,8 +6,9 @@ import subprocess
 import tempfile
 import unittest
 import uuid
+from unittest.mock import patch, MagicMock
 
-from enable_https import check_target, cli_options, conflicting_routes, flatten, literal_compose, preserve_runtime, resolver_check, select_entrypoint, select_network
+from enable_https import check_host_backend, check_target, cli_options, conflicting_routes, flatten, literal_compose, preserve_runtime, resolver_check, select_entrypoint, select_network
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -21,6 +22,35 @@ def app_fixture():
     }
 
 class HttpsTests(unittest.TestCase):
+    def test_host_proxy_uses_app_network_without_joining_proxy(self):
+        proxy = {'HostConfig': {'NetworkMode': 'host'}, 'NetworkSettings': {'Networks': {'host': {}}}}
+        app = app_fixture()
+        self.assertEqual(select_network(proxy, {}, None, app), 'natan_default')
+        self.assertEqual(select_network(proxy, {'providers.docker.network': 'unrelated'}, None, app), 'natan_default')
+        with self.assertRaises(RuntimeError):
+            select_network(proxy, {}, 'traefik-net', app)
+        app['NetworkSettings']['Networks']['second'] = {}
+        with self.assertRaises(RuntimeError):
+            select_network(proxy, {}, None, app)
+        self.assertEqual(select_network(proxy, {}, 'natan_default', app), 'natan_default')
+        with self.assertRaisesRegex(RuntimeError, 'no tiene una red'):
+            select_network({'NetworkSettings': {'Networks': {'none': {}}}}, {}, None)
+
+    def test_host_backend_requires_local_bridge_and_healthy_app(self):
+        app = app_fixture()
+        app['NetworkSettings']['Networks']['natan_default']['IPAddress'] = '172.18.0.2'
+        with self.assertRaises(RuntimeError):
+            check_host_backend({'Driver': 'overlay', 'Scope': 'swarm'}, app, 'natan_default')
+        with patch('enable_https.urllib.request.build_opener') as build:
+            response = MagicMock()
+            response.read.return_value = b'{"service":"natan-vps"}'
+            build.return_value.open.return_value.__enter__.return_value = response
+            check_host_backend({'Driver': 'bridge', 'Scope': 'local'}, app, 'natan_default')
+            build.return_value.open.assert_called_once_with('http://172.18.0.2:3000/healthz', timeout=10)
+            response.read.return_value = b'{"service":"other"}'
+            with self.assertRaises(RuntimeError):
+                check_host_backend({'Driver': 'bridge', 'Scope': 'local'}, app, 'natan_default')
+
     def test_select_existing_network_and_reject_ambiguity(self):
         proxy = {'NetworkSettings': {'Networks': {'real-proxy-net': {}}}}
         self.assertEqual(select_network(proxy, {}, None), 'real-proxy-net')

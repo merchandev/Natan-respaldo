@@ -104,7 +104,18 @@ def select_entrypoint(config, preferred, port):
         raise RuntimeError('No se pudo identificar el entrypoint del puerto ' + str(port) + '; comprobar la configuración de Traefik')
     return candidates[0]
 
-def select_network(proxy, config, requested):
+def select_network(proxy, config, requested, app=None):
+    # En Linux, un proxy en host alcanza la IP del backend por el bridge
+    # del servidor. No se puede conectar ese proxy a otra red Docker.
+    if proxy.get('HostConfig', {}).get('NetworkMode') == 'host':
+        networks = [name for name in (app or {}).get('NetworkSettings', {}).get('Networks', {}) if name not in ('host', 'none', 'bridge')]
+        if requested:
+            if requested not in networks:
+                raise RuntimeError('Con Traefik en host, elegir una red ya conectada a la app: ' + ', '.join(networks))
+            return requested
+        if len(networks) == 1:
+            return networks[0]
+        raise RuntimeError('Traefik usa host. Indicar --traefik-network entre las redes de la app: ' + ', '.join(networks))
     networks = [name for name in proxy['NetworkSettings']['Networks'] if name not in ('host', 'none', 'bridge')]
     chosen = requested or config.get('providers.docker.network')
     if chosen:
@@ -113,7 +124,20 @@ def select_network(proxy, config, requested):
         return chosen
     if len(networks) == 1:
         return networks[0]
+    if not networks:
+        raise RuntimeError('El proxy no tiene una red Docker utilizable y no usa modo host')
     raise RuntimeError('Traefik tiene varias redes. Elegir con --traefik-network: ' + ', '.join(networks))
+
+def check_host_backend(network_info, app, network):
+    if network_info.get('Driver') != 'bridge' or network_info.get('Scope') != 'local':
+        raise RuntimeError('Traefik en host requiere una red bridge local para esta actualización')
+    address = app['NetworkSettings']['Networks'][network].get('IPAddress')
+    if not address:
+        raise RuntimeError('La app no tiene IPv4 en la red elegida')
+    direct = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    with direct.open('http://' + address + ':3000/healthz', timeout=10) as response:
+        if json.load(response).get('service') != 'natan-vps':
+            raise RuntimeError('El backend no responde como natan-vps desde el servidor')
 
 def resolver_check(proxy, config, preferred):
     names = sorted({key.split('.')[1] for key in config if key.startswith('certificatesresolvers.') and '.acme' in key})
@@ -231,8 +255,11 @@ def main():
     http = select_entrypoint(config, args.http_entrypoint, 80)
     https = select_entrypoint(config, args.https_entrypoint, 443)
     resolver = resolver_check(proxy, config, args.cert_resolver)
-    network = select_network(proxy, config, args.traefik_network)
-    run('docker', 'network', 'inspect', network, quiet=True)
+    network = select_network(proxy, config, args.traefik_network, app)
+    network_info = json.loads(run('docker', 'network', 'inspect', network, quiet=True))[0]
+    if proxy.get('HostConfig', {}).get('NetworkMode') == 'host':
+        check_host_backend(network_info, app, network)
+        print('Traefik usa host; se conserva la red de la app y se verificó su acceso directo.')
     conflicts = conflicting_routes(containers, app['Id'])
     if conflicts:
         raise RuntimeError('Hay otra ruta Docker para este dominio: ' + ', '.join(conflicts) + '. Resolver esa asociación antes de continuar.')
@@ -256,11 +283,13 @@ def main():
     updated['services']['app']['labels'].update({key: value.replace('$$', '$') for key, value in merged['services']['app']['labels'].items()})
     updated['networks']['natan_proxy'] = {'external': True, 'name': network}
     # No declarar dos veces una red ya conectada.
+    proxy_aliases = ['natan-respaldo-web']
     for alias, settings in list(updated['networks'].items()):
         if alias != 'natan_proxy' and settings['name'] == network:
+            proxy_aliases.extend(updated['services']['app']['networks'][alias].get('aliases') or [])
             del updated['networks'][alias]
             del updated['services']['app']['networks'][alias]
-    updated['services']['app']['networks']['natan_proxy'] = {'aliases': ['natan-respaldo-web']}
+    updated['services']['app']['networks']['natan_proxy'] = {'aliases': list(dict.fromkeys(proxy_aliases))}
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup = ROOT / '.deploy-private' / stamp
     backup.mkdir(parents=True, mode=0o700)

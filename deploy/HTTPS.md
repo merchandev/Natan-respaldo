@@ -50,6 +50,8 @@ El script no importa SQL ni cambia Supabase. Mantiene las credenciales y datos c
 
 ## Si hay varios proxies o redes
 
+Si Traefik usa `network_mode: host`, el script conserva la red bridge local de la app y comprueba desde el servidor su `/healthz` interno antes de cambiarla. No conecta Traefik a otra red ni cambia su configuración. Si la app tiene varias redes, seleccionar una existente con `--traefik-network`. Este modo corrige el aviso vacío «Traefik tiene varias redes» de la versión anterior.
+
 El script se detiene antes de recrear la aplicación e indica los candidatos. Volver a ejecutarlo seleccionando los nombres reales, por ejemplo:
 
 ```bash
