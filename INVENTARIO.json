@@ -1,0 +1,326 @@
+{
+  "date": "2026-10-26",
+  "backupExportDate": "2026-10-19",
+  "originalFileCount": 2327,
+  "originalBytes": 259747257,
+  "photos": 2238,
+  "tableRows": {
+    "natan_banners": 1,
+    "natan_bcv_history": 40,
+    "natan_brands": 8,
+    "natan_categories": 7,
+    "natan_clients": 7,
+    "natan_customers": 60,
+    "natan_orders": 1,
+    "natan_products": 3324,
+    "natan_product_photos": 1297,
+    "natan_settings": 8
+  },
+  "sourceFiles": [
+    {
+      "path": "codigo-fuente/.env.example",
+      "bytes": 551,
+      "sha256": "dcdb58bb5d76db0ac547d00021183dc3be4aa221261a878a8247a6b0c1a4828f"
+    },
+    {
+      "path": "codigo-fuente/.gitignore",
+      "bytes": 23,
+      "sha256": "7950323b7dbdd9ac99036a76f01554a937010f3f4b6089c10265ab9256a6183d"
+    },
+    {
+      "path": "codigo-fuente/README.md",
+      "bytes": 4783,
+      "sha256": "559a5189812484e279f11baf7905b71de46f954d0324e9a7089bbde546a17820"
+    },
+    {
+      "path": "codigo-fuente/SETUP_D3XD.md",
+      "bytes": 2968,
+      "sha256": "4d1eb1755b1076a032e4dbf6fb03818191709294e2a893f1cf69c006bfeb2443"
+    },
+    {
+      "path": "codigo-fuente/admin.html",
+      "bytes": 231103,
+      "sha256": "27c4cde526925e1c1976170c621cfe329edb6dc9fce2a656542628844d22ad79"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/_client.js",
+      "bytes": 6596,
+      "sha256": "c89766dad07b75fc34bbf3909a885c359c97477a24b722a5d597e5b93f569b7b"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/_crypto.js",
+      "bytes": 2221,
+      "sha256": "436c36b4e08d718efc1779f2754853d9b6caab308f991fb17b8204be67829cc9"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/cobrar-c2p.js",
+      "bytes": 552,
+      "sha256": "d306189a144cd4b5c5e965b579028cf5b6a7ef7efabffd3477bbced3dd445549"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/enviar-p2p.js",
+      "bytes": 634,
+      "sha256": "5a96303aebf3121a07b2cfb4b88a7bbbac0f3ab5be699474b3d453b5bf7430b6"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/saldo.js",
+      "bytes": 696,
+      "sha256": "727116457d65886465fc6a445d887b211009ee95d606061bc773d80a6853e4e0"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/tasa-bcv.js",
+      "bytes": 512,
+      "sha256": "ac7fff0ede0aaa826d9e0faf299bfb20b7bd93be0d36f61e16bee29e84f3d23c"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/validar-p2p.js",
+      "bytes": 1300,
+      "sha256": "9270c06b0004bfa358af231693eda8072c4064eea4e778574877992c73121c9a"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/validar-referencia.js",
+      "bytes": 1225,
+      "sha256": "dc89330c85849c33b2d1a81a9996aee675a151c743c844986e9b99e20fa82f95"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/validar-sin-referencia.js",
+      "bytes": 1222,
+      "sha256": "42ce1593aca34955c66bc8dabb588519467f81801e204db18676b7df31731322"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/webhook-dev.js",
+      "bytes": 2027,
+      "sha256": "68f9fe769af86d60d1a548e6ed1ed7aa346f5c15a5008f120e90315039100c08"
+    },
+    {
+      "path": "codigo-fuente/api/bnc/webhook.js",
+      "bytes": 3346,
+      "sha256": "a849eddacba5f38a15fa25f2e7a621497c4360ddeabca8feac44c0dd11839fd7"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/_lib.js",
+      "bytes": 14405,
+      "sha256": "9a97dd20890f5d13894725fdea7689353d2445d368d90ffa996a96d02d60169d"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/actualizar-precios-stock.js",
+      "bytes": 5856,
+      "sha256": "a3a97bb81392d015e80de334dcf8bb297deb7e8c8883ae6cb3768f9a7dd41095"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/borrar-pedido.js",
+      "bytes": 1417,
+      "sha256": "69c63d076880d886c9e9799c37a854cc53cf1d40f5c7ca71e7f6c62fc0286b34"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/borrar-productos.js",
+      "bytes": 1434,
+      "sha256": "1ae586e806c382a554775ca0dc5666d9704f0e25da00405074ceb73ab3588c66"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/check-status.js",
+      "bytes": 2540,
+      "sha256": "a25b18f7cff1a998c829dc4134d3f3a7a2f30b0fbbbac6c63b2456092ab4b4cf"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/configuracion.js",
+      "bytes": 2501,
+      "sha256": "3a63f5345f1be2a676d1eb58d64d24ba42125a2974102ddbfd7140b94cd48c1d"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/consultar-pedidos.js",
+      "bytes": 2149,
+      "sha256": "464ec2dce63473a91b9c69bfcda2dde37f9c10e706d284941d4e34aca4723a21"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/consultar-productos.js",
+      "bytes": 2033,
+      "sha256": "3d7795cb4e476f0afed9c86985967d8d6a614a4fb8703e7b5b842adc8be01fe2"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/guardar-productos.js",
+      "bytes": 11073,
+      "sha256": "32601c6d0c5c3f05cb3c5797e04d2d9850b8ee703fc77c9ce4eb9938bcacbe8f"
+    },
+    {
+      "path": "codigo-fuente/api/d3xd/ruta-desconocida.js",
+      "bytes": 1077,
+      "sha256": "1bfded1767a985b8969edb6982f9f2050289aeaeea6de195b0d4921b50dd7dab"
+    },
+    {
+      "path": "codigo-fuente/api/status.js",
+      "bytes": 3263,
+      "sha256": "a58cf1572546d740f36e1cabbdada755cdfd16a61b8f600b2aabd026d6be9c27"
+    },
+    {
+      "path": "codigo-fuente/apple-touch-icon.png",
+      "bytes": 12827,
+      "sha256": "0499865b6252a771ed7e12082da5b1fa6e1e31670185b710af450fc85e986878"
+    },
+    {
+      "path": "codigo-fuente/basededatos/esquema_completo.sql",
+      "bytes": 13259,
+      "sha256": "ec717674e5fa5b3ab001869569f025f27cd4cc8b3972075d7944c9639dac1d3c"
+    },
+    {
+      "path": "codigo-fuente/basededatos/rls_permisos_por_rol.sql",
+      "bytes": 7328,
+      "sha256": "2973352991c1464876cf0eb442180f242c3240da44427f4d060e31a4124b7648"
+    },
+    {
+      "path": "codigo-fuente/estado.html",
+      "bytes": 10851,
+      "sha256": "1a210a5dc47ebbf42e1f74c06485f8d85496b0fdb1fa1e9c82455e893ed8a0c9"
+    },
+    {
+      "path": "codigo-fuente/favicon-16.png",
+      "bytes": 177,
+      "sha256": "e7766c0bd7cc62d838364f9703a6deed82bb4d6c0ba9c567d4f2226f887eda33"
+    },
+    {
+      "path": "codigo-fuente/favicon-48.png",
+      "bytes": 723,
+      "sha256": "8d7d0eebd9d9fc66526afb0f85b029786f952ddf469ad0b1510dbe3b0b4d8add"
+    },
+    {
+      "path": "codigo-fuente/favicon.ico",
+      "bytes": 1342,
+      "sha256": "d4b6b7fc5ab6afb1a65c1af43b21ac6b05185d7bb1899e31ba1e31566d835f8d"
+    },
+    {
+      "path": "codigo-fuente/favicon.png",
+      "bytes": 388,
+      "sha256": "21dc2f71e7d97df5e8f54dcd85d064018d4508c3e5f249d029a39cf698de9cd6"
+    },
+    {
+      "path": "codigo-fuente/icon-192.png",
+      "bytes": 5962,
+      "sha256": "e8d3a9a9d66586d43815c109cfd70ad0f850e5fda93471c52e511c185f69cf6c"
+    },
+    {
+      "path": "codigo-fuente/icon-512.png",
+      "bytes": 33788,
+      "sha256": "9737b31016676b993287d1e01086b7d02ba23f062732ec80db82e7dc5c63f239"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-10.png",
+      "bytes": 290031,
+      "sha256": "1f0310bdf11cce45b0f6b0c684f63877c20fbb909ffb469c9339b9a459568975"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-2.png",
+      "bytes": 291185,
+      "sha256": "5afc2b9ed372ce346e750fa202ab10f6afe5bfedbcb5e9f72e9d73df1c2345ae"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-3.png",
+      "bytes": 314376,
+      "sha256": "2f75bd958ed75a8205224e1714ffe56f540686048457e345a621bd7f9c666a8d"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-4.png",
+      "bytes": 300713,
+      "sha256": "bbe8dc92823c3017d73d84afe93a7615fc30c7193b75250f1da2d518597bb843"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-5.png",
+      "bytes": 288212,
+      "sha256": "b88ed6ea47a03a3de2d4c97c3aa67645b5337088fa707cb15656fd84f3dc15a2"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-7.png",
+      "bytes": 274518,
+      "sha256": "444cfe647bf7dd51feaeca893d828c723d1e65bbdd3bb10aeffd3e81f439fab9"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-8.png",
+      "bytes": 324696,
+      "sha256": "dbe5a149d1d9a1619efed5f88005741c42ab4ab404a405a55601b6708e732df1"
+    },
+    {
+      "path": "codigo-fuente/img/imagen-9.png",
+      "bytes": 275029,
+      "sha256": "3944f92d922d50b7de15c49ac569817eaf3eede51a24551f514c58bf9c161feb"
+    },
+    {
+      "path": "codigo-fuente/index.html",
+      "bytes": 173223,
+      "sha256": "dba0b1ad19b02f3d0bd11eaa387e82ca575c21783470d31acb408367bdbe6e5d"
+    },
+    {
+      "path": "codigo-fuente/informe.html",
+      "bytes": 36307,
+      "sha256": "1c1eb0188459677104938fa1797ae9f39dc192d0d401614577f7f45923451b87"
+    },
+    {
+      "path": "codigo-fuente/logo-blue.png",
+      "bytes": 10927,
+      "sha256": "e2f1e904a6caae1c467903d7e49bd16d6de93c0277a5b353a511229855d2e81b"
+    },
+    {
+      "path": "codigo-fuente/logo-cashea.png",
+      "bytes": 3433075,
+      "sha256": "ebd131dbf94a9a2993ff9ea7a48a5c4a93d191f1585c296d7e012807a99d19a1"
+    },
+    {
+      "path": "codigo-fuente/logo-krece.png",
+      "bytes": 518876,
+      "sha256": "dfe50ea0681c36e5ee7374801672df67d8b27bfe0167cee36984af303be11233"
+    },
+    {
+      "path": "codigo-fuente/logo-weppa.png",
+      "bytes": 1404931,
+      "sha256": "d96a5a5c03dcb587044beb4f8c66820ec7709fdb21d966bd53e70abaa0b7556c"
+    },
+    {
+      "path": "codigo-fuente/logo-white.png",
+      "bytes": 5475,
+      "sha256": "0b6a700b1de83f228e6982c11ee71c8e53389494cf3222a74ad1708662f97e49"
+    },
+    {
+      "path": "codigo-fuente/logo.svg",
+      "bytes": 10386,
+      "sha256": "a126cdf809716ae89ef1770e301488936342ef42ddf7c7ce7e027cd00bcd841d"
+    },
+    {
+      "path": "codigo-fuente/manual.html",
+      "bytes": 36170,
+      "sha256": "9415faa0c3cb5da9daac1bf3468f65f27342ba11e070728353d6860d197820bc"
+    },
+    {
+      "path": "codigo-fuente/migration.sql",
+      "bytes": 3330,
+      "sha256": "ceb24da4f3ef3c0ee25b0ebbd6204d885909c6bb85f0dd8ce9ea8718c927c7bd"
+    },
+    {
+      "path": "codigo-fuente/package-lock.json",
+      "bytes": 517,
+      "sha256": "5a0dac725ee84082508a2b3a2dc85291aee61ab78e095a8d21466091f76279c4"
+    },
+    {
+      "path": "codigo-fuente/package.json",
+      "bytes": 111,
+      "sha256": "473ea17a206add418b05cd5d9aa2407ac604bb76edc9c633eb193a959e526add"
+    },
+    {
+      "path": "codigo-fuente/push pull up.json",
+      "bytes": 1129,
+      "sha256": "cce81fdfdc574a88da4e8a5b79872dbd45323a0f5fad5082ce5bdf4cec049b4b"
+    },
+    {
+      "path": "codigo-fuente/robots.txt",
+      "bytes": 96,
+      "sha256": "d13e7c046c79c12943cb1adbebc62f8caafa837528f52ccc57161d0fe07c021e"
+    },
+    {
+      "path": "codigo-fuente/servidor-bnc/natan-bnc.yaml",
+      "bytes": 920,
+      "sha256": "ef42ecf61dc36db70f6a19e93da71f673867a61db92f9b221fb55e0688b23ebd"
+    },
+    {
+      "path": "codigo-fuente/sitemap.xml",
+      "bytes": 384,
+      "sha256": "1fabdd1bb318ae248adadb59caa2d61548cb1cb959cf1a7551fb808752eabfd7"
+    }
+  ]
+}

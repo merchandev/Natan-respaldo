@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manual de Uso — Natan Electronics</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f4f6f9;color:#191b23;line-height:1.6;}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:#0d1526;overflow-y:auto;z-index:100;padding:0 0 32px;}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sidebar-logo img{height:36px;width:auto;border-radius:6px;}
+.sidebar-label{font-size:10px;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.1em;padding:20px 20px 6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:#9ea8c0;font-size:13px;font-weight:500;cursor:pointer;border-radius:0;transition:all .2s;text-decoration:none;}
+.nav-item:hover,.nav-item.active{background:#1a2540;color:white;}
+.nav-item .num{width:22px;height:22px;background:#003fb1;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;}
+
+/* ── MAIN ── */
+.main{margin-left:260px;min-height:100vh;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0d1526 0%,#003fb1 100%);padding:60px 48px 48px;color:white;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:20px;color:rgba(255,255,255,.85);}
+.hero h1{font-size:36px;font-weight:800;line-height:1.2;margin-bottom:12px;}
+.hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:540px;}
+.hero-meta{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;}
+.hero-meta span{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;}
+.hero-meta strong{color:rgba(255,255,255,.85);}
+
+/* ── CONTENT ── */
+.content{padding:48px;}
+.section{scroll-margin-top:32px;margin-bottom:64px;}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid #e8eaf0;}
+.section-num{width:40px;height:40px;background:#003fb1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;}
+.section-title{font-size:22px;font-weight:800;color:#191b23;}
+.section-subtitle{font-size:13px;color:#6b7280;margin-top:2px;}
+
+/* ── CARDS ── */
+.card{background:white;border-radius:16px;border:1px solid #e8eaf0;padding:24px;margin-bottom:20px;}
+.card-title{font-size:15px;font-weight:700;color:#191b23;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.card-title .icon{width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+
+/* ── STEPS ── */
+.steps{counter-reset:step;}
+.step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+.step-num{width:32px;height:32px;background:#003fb1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0;margin-top:2px;}
+.step-body{flex:1;}
+.step-body strong{display:block;font-size:14px;font-weight:700;color:#191b23;margin-bottom:4px;}
+.step-body p{font-size:13px;color:#4b5563;line-height:1.6;}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;border-radius:12px;padding:16px;margin-bottom:16px;font-size:13px;}
+.alert-blue{background:#dbeafe;border:1px solid #93c5fd;color:#1e40af;}
+.alert-green{background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;}
+.alert-yellow{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+.data-table th{background:#f8fafc;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;border-bottom:1px solid #e2e8f0;}
+.data-table td{padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#374151;vertical-align:top;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:11px;font-family:monospace;color:#3730a3;}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}
+.badge-blue{background:#dbe1ff;color:#003fb1;}
+.badge-green{background:#d1fae5;color:#065f46;}
+.badge-orange{background:#fef3c7;color:#92400e;}
+.badge-red{background:#fee2e2;color:#991b1b;}
+.badge-gray{background:#f3f4f6;color:#6b7280;}
+
+/* ── FLOW ── */
+.flow{display:flex;flex-wrap:wrap;gap:0;margin:16px 0;}
+.flow-step{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;flex:1;min-width:140px;text-align:center;position:relative;}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:16px;font-weight:700;z-index:1;}
+.flow-step .flow-icon{font-size:24px;display:block;margin-bottom:6px;}
+.flow-step strong{display:block;font-size:12px;font-weight:700;color:#191b23;}
+.flow-step span{font-size:11px;color:#9ca3af;}
+.flow-gap{width:28px;flex-shrink:0;}
+
+/* ── URL BOX ── */
+.url-box{background:#0d1526;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0;}
+.url-box code{color:#60a5fa;font-size:14px;font-family:monospace;word-break:break-all;}
+.url-box .copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0;transition:all .2s;}
+.url-box .copy-btn:hover{background:rgba(255,255,255,.15);color:white;}
+
+/* ── QUICK REF ── */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;}
+.quick-card{background:white;border:1px solid #e8eaf0;border-radius:12px;padding:16px;}
+.quick-card .qc-icon{font-size:22px;margin-bottom:8px;display:block;}
+.quick-card strong{display:block;font-size:13px;font-weight:700;color:#191b23;margin-bottom:4px;}
+.quick-card p{font-size:12px;color:#6b7280;}
+
+/* ── FOOTER ── */
+.manual-footer{background:#0d1526;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;margin-top:64px;}
+.manual-footer strong{color:rgba(255,255,255,.7);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main{margin-left:0;}
+  .hero{padding:32px 20px 28px;}
+  .hero h1{font-size:24px;}
+  .content{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <img src="logo-white.png" alt="Natan Electronics"/>
+  </div>
+  <div class="sidebar-label">Manual de Uso</div>
+  <a href="#acceso" class="nav-item active"><span class="num">1</span>Acceso al panel</a>
+  <a href="#dashboard" class="nav-item"><span class="num">2</span>Dashboard</a>
+  <a href="#productos" class="nav-item"><span class="num">3</span>Cargar productos</a>
+  <a href="#csv" class="nav-item"><span class="num">4</span>Carga masiva CSV</a>
+  <a href="#pedidos" class="nav-item"><span class="num">5</span>Gestión de pedidos</a>
+  <a href="#bcv" class="nav-item"><span class="num">6</span>Tasa BCV</a>
+  <a href="#tienda" class="nav-item"><span class="num">7</span>Cómo ve el cliente</a>
+  <a href="#flujo" class="nav-item"><span class="num">8</span>Flujo completo</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📘 Documentación del sistema</div>
+  <h1>Manual de Uso<br/>Natan Electronics</h1>
+  <p>Todo lo que necesitas saber para administrar tu tienda, cargar productos y gestionar pedidos desde el panel de control.</p>
+  <div class="hero-meta">
+    <span>🗓 <strong>Versión:</strong> Junio 2025</span>
+    <span>🔧 <strong>Soporte:</strong> Navi Dev</span>
+    <span>📍 <strong>Sedes:</strong> Maturín & Temblador</span>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══════════════════════════════════════════════
+     1. ACCESO AL PANEL
+══════════════════════════════════════════════ -->
+<div class="section" id="acceso">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Acceso al Panel de Administración</div>
+      <div class="section-subtitle">Cómo ingresar y cerrar sesión de forma segura</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#dbe1ff">🌐</span> Links del sistema</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:12px;">Guarda estos enlaces en tu navegador o teléfono:</p>
+    <p style="font-size:12px;font-weight:700;color:#374151;margin-bottom:4px;">Tienda (clientes)</p>
+    <div class="url-box">
+      <code>https://natan-electronics.vercel.app</code>
+      <button class="copy-btn" onclick="copyText('https://natan-electronics.vercel.app',this)">Copiar</button>
+    </div>
+    <p style="font-size:12px;font-weight:700;color:#374151;margin-bottom:4px;margin-top:12px;">Panel Admin (solo tú)</p>
+    <div class="url-box">
+      <code>https://natan-electronics.vercel.app/admin.html</code>
+      <button class="copy-btn" onclick="copyText('https://natan-electronics.vercel.app/admin.html',this)">Copiar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#d1fae5">🔐</span> Cómo ingresar</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abre el link del panel admin</strong><p>Entra a la URL del panel. Verás una pantalla de acceso con el logo de Natan Electronics.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ingresa la contraseña</strong><p>Escribe tu contraseña y presiona <strong>Ingresar</strong> (o la tecla Enter). La sesión queda guardada en tu navegador — no necesitas escribirla cada vez que entres.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Para cerrar sesión</strong><p>Haz clic en el ícono de <strong>salida (→)</strong> que aparece en la parte inferior del menú lateral izquierdo, junto a tu nombre.</p></div></div>
+    </div>
+    <div class="alert alert-yellow">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Importante:</strong> No compartas tu contraseña. Si necesitas cambiarla, comunícate con el soporte de Navi Dev.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     2. DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="section" id="dashboard">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Dashboard — Resumen General</div>
+      <div class="section-subtitle">Lo primero que ves al entrar al panel</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#fef3c7">📊</span> Tarjetas de estadísticas</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">Al entrar al panel verás 4 tarjetas con información en tiempo real:</p>
+    <table class="data-table">
+      <thead><tr><th>Tarjeta</th><th>Qué muestra</th></tr></thead>
+      <tbody>
+        <tr><td><strong>📦 Productos</strong></td><td>Total de productos activos en tu catálogo</td></tr>
+        <tr><td><strong>📋 Pedidos</strong></td><td>Total de pedidos recibidos (todos los estados)</td></tr>
+        <tr><td><strong>💰 Ventas del mes</strong></td><td>Suma en dólares de pedidos confirmados o entregados este mes</td></tr>
+        <tr><td><strong>⚠️ Stock bajo</strong></td><td>Productos con 2 unidades o menos disponibles</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#dbe1ff">🔔</span> Alertas de pedidos pendientes</div>
+    <p style="font-size:13px;color:#6b7280;">Si hay pedidos con estado <span class="badge badge-orange">Pendiente</span>, aparecerá un aviso en la parte superior del dashboard con la cantidad. Haz clic en <strong>"Ver pedidos"</strong> para ir directamente a gestionarlos.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3. CARGAR PRODUCTOS
+══════════════════════════════════════════════ -->
+<div class="section" id="productos">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Cargar Productos (uno por uno)</div>
+      <div class="section-subtitle">Agregar, editar y desactivar productos del catálogo</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#d1fae5">➕</span> Agregar un producto nuevo</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Ve a la sección "Productos"</strong><p>En el menú lateral izquierdo, haz clic en <strong>Productos</strong>.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Haz clic en "Agregar"</strong><p>Botón azul en la esquina superior derecha de la sección.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Llena el formulario</strong><p>Completa los campos del producto (ver tabla abajo).</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Haz clic en "Guardar Producto"</strong><p>El producto aparecerá inmediatamente en la tienda. No necesitas recargar la página.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#f3f4f6">📋</span> Campos del formulario</div>
+    <table class="data-table">
+      <thead><tr><th>Campo</th><th>Descripción</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nombre *</strong></td><td>Nombre completo del producto</td><td>Samsung Galaxy S24 Ultra</td></tr>
+        <tr><td><strong>Categoría *</strong></td><td>Tipo de producto</td><td>Smartphones</td></tr>
+        <tr><td><strong>Marca</strong></td><td>Fabricante</td><td>Samsung</td></tr>
+        <tr><td><strong>Precio USD *</strong></td><td>Precio en dólares. Los bolívares se calculan automáticamente con la tasa BCV.</td><td>1299</td></tr>
+        <tr><td><strong>Precio anterior</strong></td><td>Precio tachado (opcional, para mostrar descuento)</td><td>1499</td></tr>
+        <tr><td><strong>Etiqueta</strong></td><td><span class="badge badge-green">new</span> <span class="badge badge-red">hot</span> <span class="badge badge-blue">stock</span> o ninguna</td><td>hot</td></tr>
+        <tr><td><strong>Descripción</strong></td><td>Texto corto que aparece en la ficha del producto</td><td>Flagship 2024 con S Pen…</td></tr>
+        <tr><td><strong>URL de imagen</strong></td><td>Enlace directo a la foto del producto (jpg, png, webp)</td><td>https://…/s24.jpg</td></tr>
+        <tr><td><strong>Especificaciones</strong></td><td>Una especificación por línea con formato <code>Clave: Valor</code></td><td>Pantalla: 6.8" AMOLED<br/>RAM: 12GB</td></tr>
+        <tr><td><strong>Sedes</strong></td><td>Dónde está disponible el producto</td><td>✅ Maturín &nbsp; ✅ Temblador</td></tr>
+        <tr><td><strong>Stock Maturín</strong></td><td>Unidades disponibles en Maturín</td><td>5</td></tr>
+        <tr><td><strong>Stock Temblador</strong></td><td>Unidades disponibles en Temblador</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-blue" style="margin-top:16px;">
+      <span class="alert-icon">💡</span>
+      <div>Los campos marcados con <strong>*</strong> son obligatorios. Los demás son opcionales pero recomendados.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#fef3c7">✏️</span> Editar un producto existente</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Busca el producto</strong><p>Usa la barra de búsqueda o filtra por categoría/sede.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Haz clic en el ícono de lápiz ✏️</strong><p>Se abre el formulario con los datos actuales del producto para editar.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Guarda los cambios</strong><p>El botón dirá "Actualizar Producto". Los cambios se reflejan en la tienda al instante.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#fee2e2">🔴</span> Desactivar / Activar un producto</div>
+    <p style="font-size:13px;color:#6b7280;">En la columna <strong>Estado</strong> de la tabla de productos, cada fila tiene un interruptor (toggle). Si lo apagas, el producto <strong>deja de verse en la tienda</strong> pero no se borra. Puedes volverlo a activar cuando quieras.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     4. CARGA MASIVA CSV
+══════════════════════════════════════════════ -->
+<div class="section" id="csv">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Carga Masiva de Productos (CSV)</div>
+      <div class="section-subtitle">Para cargar muchos productos de una sola vez con Excel</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#d1fae5">📥</span> Paso a paso</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Descarga la plantilla</strong><p>Ve a <strong>Productos → botón CSV → "Descargar plantilla CSV de ejemplo"</strong>. Se descarga un archivo Excel con los encabezados y 3 ejemplos.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abre el archivo en Excel</strong><p>El archivo se llama <code>plantilla-productos-natan.csv</code>. Ábrelo con Excel o Google Sheets.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Borra las líneas grises de instrucciones y los 3 ejemplos</strong><p>Las primeras filas empiezan con <code>#</code> — son instrucciones, bórralas. Luego borra los 3 productos de ejemplo.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Llena una fila por producto</strong><p>Respeta el orden de las columnas. No cambies los nombres de los encabezados.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Guarda como CSV</strong><p>En Excel: Archivo → Guardar como → <strong>CSV UTF-8 (delimitado por comas)</strong>.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Importa el archivo</strong><p>Regresa al panel → <strong>Productos → CSV → arrastra o selecciona tu archivo</strong>. Los productos se cargan automáticamente.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#f3f4f6">📐</span> Formato de las especificaciones</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:12px;">En la columna <code>especificaciones</code> escribe las características separadas por el símbolo <code>|</code>:</p>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;font-family:monospace;font-size:13px;color:#374151;">
+      Pantalla:6.8" AMOLED|RAM:12GB|ROM:256GB|Batería:5000mAh|Cámara:200MP
+    </div>
+    <p style="font-size:12px;color:#9ca3af;margin-top:8px;">Cada par <code>Nombre:Valor</code> separado por <code>|</code> — sin espacios extra.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#f3f4f6">🗂️</span> Columnas disponibles</div>
+    <table class="data-table">
+      <thead><tr><th>Columna</th><th>Valores posibles</th></tr></thead>
+      <tbody>
+        <tr><td><code>categoria</code></td><td>smartphones · laptops · audio · smartwatches · tablets · accesorios</td></tr>
+        <tr><td><code>etiqueta</code></td><td>new · hot · stock · (vacío = ninguna)</td></tr>
+        <tr><td><code>sede</code></td><td>maturin · temblador · maturin,temblador</td></tr>
+        <tr><td><code>precio_usd</code></td><td>Solo el número (ej: <code>299</code>, no <code>$299</code>)</td></tr>
+        <tr><td><code>stock_maturin</code></td><td>Solo el número (ej: <code>5</code>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     5. GESTIÓN DE PEDIDOS
+══════════════════════════════════════════════ -->
+<div class="section" id="pedidos">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Gestión de Pedidos</div>
+      <div class="section-subtitle">Cómo llegan los pedidos y cómo actualizar su estado</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#dbe1ff">📬</span> Cómo llega un pedido</div>
+    <div class="flow">
+      <div class="flow-step"><span class="flow-icon">🛒</span><strong>Cliente compra</strong><span>Agrega al carrito y completa el formulario</span></div>
+      <div class="flow-gap"></div>
+      <div class="flow-step"><span class="flow-icon">💾</span><strong>Se guarda</strong><span>El pedido queda en el panel con ID único NE-XXXXX</span></div>
+      <div class="flow-gap"></div>
+      <div class="flow-step"><span class="flow-icon">📱</span><strong>WhatsApp</strong><span>El cliente te escribe con el número de pedido</span></div>
+      <div class="flow-gap"></div>
+      <div class="flow-step"><span class="flow-icon">✅</span><strong>Tú confirmas</strong><span>Actualizas el estado en el panel</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#fef3c7">📋</span> Estados de un pedido</div>
+    <table class="data-table">
+      <thead><tr><th>Estado</th><th>Cuándo usarlo</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-orange">Pendiente</span></td><td>El pedido acaba de llegar, aún no has verificado el pago</td></tr>
+        <tr><td><span class="badge badge-blue">Confirmado</span></td><td>Verificaste el pago y vas a preparar el pedido</td></tr>
+        <tr><td><span class="badge badge-gray">En preparación</span></td><td>Estás alistando el equipo para la entrega</td></tr>
+        <tr><td><span class="badge badge-green">Entregado</span></td><td>El cliente recibió su pedido</td></tr>
+        <tr><td><span class="badge badge-red">Cancelado</span></td><td>El pedido fue cancelado por cualquier motivo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#d1fae5">✏️</span> Cómo cambiar el estado</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Ve a "Pedidos" en el menú lateral</strong><p>Verás la lista de todos los pedidos ordenados del más reciente al más antiguo.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Haz clic en el pedido</strong><p>Se abre una ventana con el detalle: qué compró, cuánto pagó, método de pago, referencia y sede.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Selecciona el nuevo estado</strong><p>Haz clic en el botón del estado que corresponde. El cambio se guarda automáticamente.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Notifica al cliente (opcional)</strong><p>Hay un botón de WhatsApp para enviarle un mensaje al cliente con el resumen y el estado actualizado.</p></div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <span class="alert-icon">💡</span>
+    <div>Los pedidos con estado <strong>Pendiente</strong> muestran un badge naranja en el menú lateral para que no se te pasen por alto.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     6. TASA BCV
+══════════════════════════════════════════════ -->
+<div class="section" id="bcv">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div>
+      <div class="section-title">Actualizar la Tasa BCV</div>
+      <div class="section-subtitle">El tipo de cambio que convierte precios USD a Bolívares</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#d1fae5">💱</span> Cómo funciona</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:12px;">Todos los precios en la tienda están en <strong>dólares (USD)</strong>. El sistema multiplica automáticamente cada precio por la tasa BCV para mostrar también el precio en <strong>bolívares (Bs.)</strong>.</p>
+    <p style="font-size:13px;color:#6b7280;">Cuando cambias la tasa en el panel, <strong>todos los precios en bolívares de la tienda se actualizan en tiempo real</strong> — sin recargar la página.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#fef3c7">📅</span> Actualización diaria</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Consulta la tasa del día</strong><p>Entra a <strong>bcv.org.ve</strong> o revisa el grupo de WhatsApp donde publican la tasa oficial.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ve a "Tasa BCV" en el menú lateral</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Ingresa la nueva tasa</strong><p>Escribe el valor en el campo grande (ej: <code>48.75</code>) y haz clic en <strong>"Actualizar Tasa"</strong>.</p></div></div>
+    </div>
+    <div class="alert alert-green" style="margin-top:8px;">
+      <span class="alert-icon">✅</span>
+      <div>Aparecerá un mensaje verde de confirmación. La tienda ya tiene los precios actualizados.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     7. CÓMO VE EL CLIENTE
+══════════════════════════════════════════════ -->
+<div class="section" id="tienda">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div>
+      <div class="section-title">Cómo ve el cliente la tienda</div>
+      <div class="section-subtitle">El flujo de compra desde el punto de vista del comprador</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#dbe1ff">🛒</span> Proceso de compra del cliente</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Entra a la tienda</strong><p>El cliente abre <code>natan-electronics.vercel.app</code> y navega por los productos.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Agrega productos al carrito</strong><p>Hace clic en el botón de carrito de cada producto que desea.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Abre el carrito y hace clic en "Pagar"</strong><p>Ve el resumen con precios en USD y Bs.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Llena el formulario de pago</strong><p>Ingresa: nombre, teléfono, método de pago (BNC / Pago Móvil / Zelle / USDT / Efectivo), sede de retiro (Maturín o Temblador) y número de referencia bancaria.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Hace clic en "Confirmar pedido por WhatsApp"</strong><p>El sistema guarda el pedido en tu panel y abre WhatsApp con un mensaje pre-redactado que incluye el número de pedido <strong>#NE-XXXXX</strong>.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Tú recibes el WhatsApp y el pedido en el panel</strong><p>El pedido aparece en <strong>Pedidos</strong> con estado <span class="badge badge-orange">Pendiente</span>. Verificas el pago y actualizas el estado.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#f3f4f6">💳</span> Métodos de pago disponibles</div>
+    <table class="data-table">
+      <thead><tr><th>Método</th><th>Requiere referencia</th></tr></thead>
+      <tbody>
+        <tr><td>🏦 Transferencia BNC</td><td>Sí</td></tr>
+        <tr><td>📱 Pago Móvil</td><td>Sí</td></tr>
+        <tr><td>💸 Zelle</td><td>Sí</td></tr>
+        <tr><td>₿ USDT</td><td>Sí</td></tr>
+        <tr><td>💵 Efectivo (en sede)</td><td>No (paga al retirar)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     8. FLUJO COMPLETO
+══════════════════════════════════════════════ -->
+<div class="section" id="flujo">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <div>
+      <div class="section-title">Flujo Completo del Sistema</div>
+      <div class="section-subtitle">Vista general de cómo todo trabaja junto</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <p style="font-size:12px;font-weight:700;color:#003fb1;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Tu rutina diaria</p>
+        <div class="step"><div class="step-num" style="background:#0d1526">🌅</div><div class="step-body"><strong>Mañana</strong><p>Actualiza la tasa BCV del día en el panel.</p></div></div>
+        <div class="step"><div class="step-num" style="background:#0d1526">📦</div><div class="step-body"><strong>Durante el día</strong><p>Revisa el panel si llegan pedidos nuevos. Confirma los pagos y actualiza estados.</p></div></div>
+        <div class="step"><div class="step-num" style="background:#0d1526">🌙</div><div class="step-body"><strong>Cuando tengas stock nuevo</strong><p>Agrega los productos al catálogo con foto, precio y stock.</p></div></div>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Qué es automático</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="alert alert-green" style="margin:0"><span class="alert-icon">✅</span><div>Precios en Bs. se actualizan solos cuando cambias la tasa BCV</div></div>
+          <div class="alert alert-green" style="margin:0"><span class="alert-icon">✅</span><div>Los pedidos se guardan solos cuando un cliente compra</div></div>
+          <div class="alert alert-green" style="margin:0"><span class="alert-icon">✅</span><div>Los productos nuevos aparecen en la tienda al instante</div></div>
+          <div class="alert alert-green" style="margin:0"><span class="alert-icon">✅</span><div>El badge de pedidos pendientes se actualiza en tiempo real</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#dbe1ff">📞</span> Soporte técnico</div>
+    <p style="font-size:13px;color:#6b7280;">Si tienes algún problema con el panel, la tienda o necesitas agregar funciones nuevas, comunícate con:</p>
+    <div style="margin-top:12px;padding:16px;background:#f8fafc;border-radius:10px;display:flex;gap:16px;align-items:center;">
+      <div style="width:44px;height:44px;background:#003fb1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🚀</div>
+      <div>
+        <p style="font-size:14px;font-weight:700;color:#191b23;">Navi Dev</p>
+        <p style="font-size:12px;color:#6b7280;">Soporte técnico &amp; desarrollo web</p>
+        <p style="font-size:12px;color:#003fb1;font-weight:600;margin-top:2px;">davidcedenobrit@gmail.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<div class="manual-footer">
+  <strong>Natan Electronics</strong> · Manual de uso v1.0 · Desarrollado por <strong>Navi Dev</strong> · 2025
+</div>
+
+</div><!-- /main -->
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// Copy button
+function copyText(text, btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig=btn.textContent;
+    btn.textContent='✓ Copiado';
+    setTimeout(()=>btn.textContent=orig,2000);
+  });
+}
+
+// Highlight active section on scroll
+const sections=document.querySelectorAll('.section[id]');
+const navItems=document.querySelectorAll('.nav-item[href^="#"]');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-80) current='#'+s.id; });
+  navItems.forEach(n=>n.classList.toggle('active',n.getAttribute('href')===current));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Proxy con IP fija para las notificaciones de pago de BNC (Traefik, configuración dinámica).
+# Servidor: VPS Ubuntu 24.04 con IP fija; DNS: registro A "bnc-webhook" → IP del VPS.
+# Solo reenvía las dos rutas del webhook a la web; todo lo demás responde 404.
+http:
+  routers:
+    natan-bnc-http:
+      rule: "Host(`bnc-webhook.natanelectronics.com`)"
+      entryPoints: [http]
+      middlewares: [natan-bnc-https]
+      service: natan-web
+    natan-bnc:
+      rule: "Host(`bnc-webhook.natanelectronics.com`) && (Path(`/api/bnc/webhook`) || Path(`/api/bnc/webhook-dev`))"
+      entryPoints: [https]
+      service: natan-web
+      tls:
+        certResolver: letsencrypt
+  middlewares:
+    natan-bnc-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+  services:
+    natan-web:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+          - url: "https://natanelectronics.com"

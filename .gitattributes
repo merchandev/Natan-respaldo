@@ -1,0 +1,9 @@
+* -text
+*.cjs text eol=lf
+*.mjs text eol=lf
+*.sh text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+deploy/** text eol=lf
+codigo-fuente/** -text
+respaldo-cifrado/** -text

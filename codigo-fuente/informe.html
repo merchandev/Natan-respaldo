@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Informe de Entrega — Natan Electronics</title>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"/>
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --primary: #003fb1;
+    --primary-light: #dbe4ff;
+    --teal: #00c9a7;
+    --teal-light: #d0f5ef;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --body: #f4f6fb;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --body: #0a0f1e; --surface: #131c30; --border: #1e2d4a;
+      --text: #f0f4ff; --muted: #8899bb; --primary-light: #1a2d5a;
+      --green-light: #052e16; --amber-light: #1c1200; --teal-light: #042520;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--body); color: var(--text); line-height: 1.6; }
+
+  .hero {
+    background: linear-gradient(135deg, #0d1526 0%, #003fb1 60%, #0050e0 100%);
+    padding: 56px 32px 48px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(0,201,167,0.18) 0%, transparent 60%);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    color: #a5c4ff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 20px;
+  }
+  .hero h1 { font-size: clamp(28px,5vw,44px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .hero h1 span { color: #00c9a7; }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 15px; max-width: 520px; }
+  .hero-meta { display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .hero-meta-item { color: rgba(255,255,255,0.55); font-size: 13px; }
+  .hero-meta-item strong { color: #fff; display: block; font-size: 15px; font-weight: 700; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 40px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat.green .stat-num { color: var(--green); }
+  .stat.amber .stat-num { color: var(--amber); }
+  .stat.blue  .stat-num { color: var(--primary); }
+  .stat.teal  .stat-num { color: var(--teal); }
+
+  .section-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px; }
+  .section-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 20px; letter-spacing: -0.01em; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 32px; }
+  .card-head { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card-head-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-head h3 { font-size: 15px; font-weight: 800; color: var(--text); }
+  .card-head p  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  .deliverable { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+  .deliverable:last-child { border-bottom: none; }
+  .del-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .del-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .del-extras { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .del-extra-tag { font-size: 10px; font-weight: 700; background: var(--teal-light); color: #007a65; padding: 2px 8px; border-radius: 999px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+  .badge-done    { background: var(--green-light); color: #15803d; }
+  .badge-partial { background: var(--amber-light); color: #92400e; }
+  .badge-extra   { background: var(--teal-light);  color: #007a65; }
+
+  .extras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; margin-bottom: 32px; }
+  .extra-card { background: var(--surface); border: 1.5px solid var(--teal); border-radius: 16px; padding: 18px; }
+  .extra-icon  { font-size: 22px; margin-bottom: 8px; }
+  .extra-title { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .extra-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .hosting-hero {
+    background: linear-gradient(135deg, #0d1526 0%, #001f6b 100%);
+    border-radius: 24px; padding: 40px 36px; position: relative; overflow: hidden; margin-bottom: 32px;
+  }
+  .hosting-hero::before {
+    content: ''; position: absolute; top: -40px; right: -40px; width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(0,201,167,0.25) 0%, transparent 70%); border-radius: 50%;
+  }
+  .hosting-hero::after {
+    content: ''; position: absolute; bottom: -60px; left: -20px; width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(0,63,177,0.4) 0%, transparent 70%); border-radius: 50%;
+  }
+  .hosting-inner { position: relative; }
+  .hosting-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,201,167,0.15); border: 1px solid rgba(0,201,167,0.35); color: #00c9a7;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .hosting-hero h2 { font-size: clamp(22px,4vw,34px); font-weight: 900; color: #fff; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .hosting-hero h2 em { color: #00c9a7; font-style: normal; }
+  .hosting-hero p { color: rgba(255,255,255,0.65); font-size: 14px; max-width: 480px; margin-bottom: 28px; line-height: 1.7; }
+  .hosting-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .hosting-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 999px; }
+  .hosting-pill .dot { width: 7px; height: 7px; background: #00c9a7; border-radius: 50%; flex-shrink: 0; }
+  .hosting-statement { background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.3); border-radius: 14px; padding: 16px 20px; color: #fff; font-size: 14px; font-weight: 600; line-height: 1.6; }
+  .hosting-statement strong { color: #00c9a7; }
+
+  .steps { }
+  .step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--primary-light); color: var(--primary); font-size: 13px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .step-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+  .footer strong { color: var(--primary); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .container { padding: 28px 16px 60px; }
+    .hosting-hero { padding: 28px 22px; }
+    .deliverable { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📋 Informe de Entrega · Julio 2026</div>
+    <h1>Estado del proyecto<br><span>Natan Electronics</span></h1>
+    <p class="hero-sub">Ecommerce + Panel de Administración — Reporte completo de avance, entregables y valor adicional generado.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Natan Electronics</strong>Cliente</div>
+      <div class="hero-meta-item"><strong>Julio 2026</strong>Fecha de corte</div>
+      <div class="hero-meta-item"><strong>$3,000 USD</strong>Inversión total</div>
+      <div class="hero-meta-item"><strong>natanelectronics.com</strong>Dominio activo</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat green"><div class="stat-num">10</div><div class="stat-label">Módulos entregados</div></div>
+    <div class="stat teal"><div class="stat-num">20</div><div class="stat-label">Extras sin costo</div></div>
+    <div class="stat blue"><div class="stat-num">952</div><div class="stat-label">Productos cargados</div></div>
+    <div class="stat amber"><div class="stat-num">0</div><div class="stat-label">Módulos pendientes</div></div>
+  </div>
+
+  <div class="section-label">Actualización · 29 de julio 2026</div>
+  <div class="section-title">Últimas mejoras aplicadas</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dbe4ff">🖼️</div>
+      <div><h3>Logo vectorial en el header</h3><p>Calidad perfecta a cualquier tamaño de pantalla</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Logo SVG (vector) en vez de imagen</div>
+        <div class="del-desc">El logo del encabezado y menú lateral ahora es vectorial — se ve nítido en cualquier pantalla o zoom, sin pixelarse nunca.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#d1fae5">🔁</div>
+      <div><h3>Carrusel automático de clientes satisfechos</h3><p>Rotación sin intervención del usuario</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Auto-rotación cada 3 segundos</div>
+        <div class="del-desc">La sección de testimonios ahora gira sola en bucle infinito, con pausa automática al pasar el mouse o tocar la pantalla.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Corrección de portada del hero</div>
+        <div class="del-desc">Se corrigió una foto de la portada principal que quedaba oculta por un conflicto técnico al cargar la página, aunque la imagen estaba bien subida.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#fef3c7">🏷️</div>
+      <div><h3>Marcas oficiales — editables desde el panel</h3><p>Antes eran fijas en el código</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Gestión completa de marcas</div>
+        <div class="del-desc">Nueva sección en el panel para agregar el logo real de cualquier marca, con categoría asociada, reordenar, ocultar o eliminar. Mientras no se configure ninguna, la tienda muestra marcas de ejemplo por defecto.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dbe4ff">📊</div>
+      <div><h3>Historial real de la tasa BCV</h3><p>Antes se perdía al recargar la página</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Registro permanente de cada cambio</div>
+        <div class="del-desc">Cada actualización de la tasa BCV —manual o automática— queda guardada de forma permanente en la base de datos, visible en el panel con fecha y hora exacta.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px">Actualización · 22 de julio 2026</div>
+  <div class="section-title">Mejoras previas</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#d0f5ef">🎨</div>
+      <div><h3>Diseño de la tienda — editable desde el panel</h3><p>Sin depender de programación para actualizar la marca</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Colores de marca</div>
+        <div class="del-desc">Color principal y de acento editables desde el panel — se aplican al instante en botones, precios y enlaces de toda la tienda.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Título, subtítulo y portadas del hero</div>
+        <div class="del-desc">El texto principal y las 5 fotos flotantes de la portada ahora se editan desde el panel, sin tocar código.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#fef3c7">🖥️</div>
+      <div><h3>Navegación y experiencia móvil</h3><p>Correcciones de usabilidad en tienda y catálogo</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Botón "atrás" perfeccionado</div>
+        <div class="del-desc">Ahora regresa exactamente a la posición de scroll donde estaba el usuario, y si hay un panel abierto (carrito, vista rápida, pago), el "atrás" lo cierra primero en vez de salir de la página.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Filtro de categorías en móvil</div>
+        <div class="del-desc">Al elegir una categoría en el celular, la vista salta directo a los productos filtrados en vez de dejar al usuario scrolleando manualmente entre los filtros.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Clientes satisfechos reubicados</div>
+        <div class="del-desc">La sección de testimonios ahora aparece justo debajo del banner principal, más visible al entrar a la tienda.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dbe4ff">🪪</div>
+      <div><h3>Portal de clientes por cédula</h3><p>Evolución del sistema de cuenta de cliente</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Identificación por cédula</div>
+        <div class="del-desc">El cliente ahora entra a "Mi cuenta" con su cédula en vez de teléfono. Si es nueva, se registra en segundos (nombre y teléfono) y queda guardada.</div>
+      </div>
+      <span class="badge badge-done">✓ Actualizado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Clientes registrados — visibles en el panel</div>
+        <div class="del-desc">Nueva sección en el panel administrativo con la lista de todos los clientes registrados: cédula, nombre, teléfono, fecha y cantidad de pedidos. Con buscador.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px">Actualización · 20 de julio 2026</div>
+  <div class="section-title">Mejoras previas</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dbe4ff">🚀</div>
+      <div><h3>SEO y posicionamiento en Google</h3><p>Preparación técnica completa para búsquedas locales</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Datos estructurados y metadatos</div>
+        <div class="del-desc">Ficha de negocio (LocalBusiness) para Google con ambas sedes, sitemap.xml, robots.txt y meta-tags optimizados con palabras clave de Maturín y Temblador.</div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dcfce7">🎨</div>
+      <div><h3>Ficha de producto — nuevas funciones</h3><p>Personalización completa desde el panel</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Colores por producto</div>
+        <div class="del-desc">Paleta de 18 colores lista para asignar a cada producto (o cualquier color personalizado), reemplaza los 3 colores fijos que traía la tienda.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Múltiples imágenes por producto</div>
+        <div class="del-desc">Galería con varias fotos por producto, portada seleccionable y miniaturas clicables en la ficha de la tienda.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Variantes / presentaciones</div>
+        <div class="del-desc">Campo genérico para presentaciones (ml en perfumes, almacenamiento en celulares, tallas, etc.), editable desde el panel.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#d1fae5">👤</div>
+      <div><h3>Cuenta de cliente</h3><p>Último módulo pendiente de la cotización — ya entregado</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Historial de pedidos y favoritos</div>
+        <div class="del-desc">El comprador ve todos sus pedidos anteriores, el estado actual (Pendiente, Confirmado, En preparación, Entregado) actualizándose en vivo sin recargar, y guarda productos favoritos con un corazón. <em>(El acceso pasó de teléfono a cédula — ver actualización del 22 de julio arriba.)</em></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#fef3c7">🖥️</div>
+      <div><h3>Experiencia de la tienda</h3><p>Mejoras de navegación e interacción</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Buscador global</div>
+        <div class="del-desc">Barra de búsqueda visible al entrar a la web, resultados instantáneos con foto y precio sobre los 909 productos.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Menú lateral (hamburguesa)</div>
+        <div class="del-desc">Navegación estándar de apps móviles para usuarios de iOS y Android ya familiarizados con ese esquema.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Botón "atrás" corregido</div>
+        <div class="del-desc">El navegador ahora recuerda el recorrido entre secciones — ya no salta al inicio ni cierra la app al retroceder.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Carruseles deslizables</div>
+        <div class="del-desc">Productos destacados y clientes satisfechos se navegan deslizando hacia los lados, con flechas en escritorio.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#d0f5ef">📣</div>
+      <div><h3>Contenido editable desde el panel</h3><p>Sin depender de programación para actualizar</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Banner de eventos y promociones</div>
+        <div class="del-desc">Carrusel principal 100% editable: subir imagen, título y enlace, reordenar, ocultar o eliminar — sin tocar código.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Clientes satisfechos</div>
+        <div class="del-desc">Sección de fotos de clientes al final de la tienda, renovable cada semana desde el panel para generar confianza.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#fef3c7">🛠️</div>
+      <div><h3>Correcciones críticas</h3><p>Integridad de datos e inventario</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Importación CSV D3xD blindada</div>
+        <div class="del-desc">Detecta automáticamente si el archivo viene en USD o Bs., corrige mapeo de stock por sede, evita duplicados al reimportar y corrige codificación de caracteres.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Limpieza de catálogo</div>
+        <div class="del-desc">Eliminados 301 productos duplicados de importaciones previas y corregidos precios afectados por el cambio de formato del CSV.</div>
+      </div>
+      <span class="badge badge-done">✓ Corregido</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Monitor del agente de tasa BCV</div>
+        <div class="del-desc">El panel ahora muestra cuándo se actualizó la tasa por última vez, con alerta visual si el agente automático deja de correr.</div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+  </div>
+
+  <div class="section-label">Lo que se cotizó</div>
+  <div class="section-title">Estado de entregables</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dbe4ff">🛍️</div>
+      <div><h3>Plataforma Ecommerce — Tienda Web</h3><p>natanelectronics.com · Publicada y operativa</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Homepage y vitrina</div>
+        <div class="del-desc">Banners principales, sección de marcas, categorías destacadas, Ofertas del Momento e integración con Instagram.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Ofertas del Momento (no cotizado)</span><span class="del-extra-tag">+ WEPPA · KRECE · CASHEA</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Catálogo y búsqueda</div>
+        <div class="del-desc">Filtros por categoría, sede (Maturín / Temblador), rango de precios y buscador en tiempo real por nombre, marca, descripción y código SKU.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Búsqueda por SKU (no cotizado)</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Carrito y checkout</div>
+        <div class="del-desc">Flujo completo de compra con selección de productos, sede de retiro y métodos de pago: BNC, Pago Móvil, Zelle, USDT, Efectivo.</div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Cuenta de cliente / historial</div>
+        <div class="del-desc">El comprador ingresa con su número de teléfono y ve su historial de pedidos, estado en vivo (sin recargar la página) y sus productos favoritos.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Estado de pedido en tiempo real</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Sección de crédito y financiamiento</div>
+        <div class="del-desc">Módulo visual con las empresas financiadoras aliadas: WEPPA, KRECE y CASHEA.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Cashea agregada (no cotizado)</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#dcfce7">⚙️</div>
+      <div><h3>Panel de Administración</h3><p>natanelectronics.com/admin · Operativo</p></div>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Gestión de productos</div>
+        <div class="del-desc">CRUD completo con búsqueda por SKU, carga de imagen por URL o archivo local, campos de Código y Tipo, activar/desactivar.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Subida de imágenes local</span><span class="del-extra-tag">+ Campo SKU / Código</span><span class="del-extra-tag">+ Importación CSV D3xD</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Inventario multi-sede</div>
+        <div class="del-desc">Control de stock diferenciado para Maturín y Temblador. 909 productos activos con stock real desde D3xD: 689 en Maturín, 511 en Temblador, 291 en ambas sedes.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ 909 productos sincronizados</span><span class="del-extra-tag">+ Migración completa desde D3xD</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Precios dinámicos BCV</div>
+        <div class="del-desc">Tasa actualizable manualmente. Agente automático activo: 5 actualizaciones diarias (9am, 11am, 2pm, 4pm, 6pm) sin intervención humana.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Agente automático BCV (no cotizado)</span><span class="del-extra-tag">+ 5 actualizaciones diarias</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Gestión de pedidos</div>
+        <div class="del-desc">Panel de órdenes con alerta de pagos BNC pendientes, verificación de referencia bancaria, estados y notificación directa por WhatsApp al cliente.</div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Guía de uso integrada</div>
+        <div class="del-desc">Módulo de instrucciones dentro del panel con todos los pasos de operación, accesos y alertas de acciones pendientes.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ No estaba cotizado</span></div>
+      </div>
+      <span class="badge badge-extra">+ Extra</span>
+    </div>
+    <div class="deliverable">
+      <div>
+        <div class="del-name">Dashboard y reportes</div>
+        <div class="del-desc">KPIs de ventas, ticket promedio, pedidos por estado, ventas por categoría, top productos más pedidos, stock por categoría y exportación a CSV.</div>
+        <div class="del-extras"><span class="del-extra-tag">+ Mapa de calor de clics (no cotizado)</span><span class="del-extra-tag">+ Ranking de productos por score</span></div>
+      </div>
+      <span class="badge badge-done">✓ Entregado</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px">Por encima de la cotización</div>
+  <div class="section-title">Lo que entregamos de más — sin costo adicional</div>
+
+  <div class="extras-grid">
+    <div class="extra-card"><div class="extra-icon">🤖</div><div class="extra-title">Agente automático de tasa BCV</div><div class="extra-desc">Consulta y actualiza la tasa oficial del BCV 5 veces al día, lunes a viernes, con monitor de estado en el panel.</div></div>
+    <div class="extra-card"><div class="extra-icon">📦</div><div class="extra-title">Migración completa desde D3xD</div><div class="extra-desc">909 productos sincronizados directamente del sistema administrativo del cliente, con stock por sede y precios convertidos.</div></div>
+    <div class="extra-card"><div class="extra-icon">🔥</div><div class="extra-title">Sección Ofertas del Momento</div><div class="extra-desc">Módulo dinámico en la homepage que muestra automáticamente los productos con mayor descuento del catálogo.</div></div>
+    <div class="extra-card"><div class="extra-icon">💳</div><div class="extra-title">WEPPA · KRECE · CASHEA</div><div class="extra-desc">Sección de financiamiento con las tres principales empresas de crédito digital venezolanas.</div></div>
+    <div class="extra-card"><div class="extra-icon">🔍</div><div class="extra-title">Búsqueda por código SKU</div><div class="extra-desc">El buscador del panel localiza productos por código SKU además de nombre, marca y descripción.</div></div>
+    <div class="extra-card"><div class="extra-icon">📖</div><div class="extra-title">Guía de uso en el panel</div><div class="extra-desc">Módulo de instrucciones operativas integrado directamente en el panel de administración.</div></div>
+    <div class="extra-card"><div class="extra-icon">🌐</div><div class="extra-title">Dominio personalizado activo</div><div class="extra-desc">natanelectronics.com configurado y activo con SSL, listo para recibir tráfico desde el primer día.</div></div>
+    <div class="extra-card"><div class="extra-icon">📊</div><div class="extra-title">Reportes & Analítica</div><div class="extra-desc">Módulo completo de KPIs, gráficos de ventas, stock y pedidos con exportación a CSV. 4 gráficos en tiempo real sin costo adicional.</div></div>
+    <div class="extra-card"><div class="extra-icon">🔥</div><div class="extra-title">Mapa de calor de productos</div><div class="extra-desc">Visualiza qué productos generan más interés en la tienda. Color e intensidad basados en clics reales de los visitantes.</div></div>
+    <div class="extra-card"><div class="extra-icon">🚀</div><div class="extra-title">SEO técnico completo</div><div class="extra-desc">Datos estructurados, sitemap y meta-tags para posicionar la tienda en búsquedas locales de Google.</div></div>
+    <div class="extra-card"><div class="extra-icon">🎨</div><div class="extra-title">Colores por producto</div><div class="extra-desc">Paleta de 18 colores + personalizados, editable desde el panel para cada producto.</div></div>
+    <div class="extra-card"><div class="extra-icon">🖼️</div><div class="extra-title">Galería de imágenes</div><div class="extra-desc">Varias fotos por producto con portada seleccionable, en vez de una sola imagen.</div></div>
+    <div class="extra-card"><div class="extra-icon">🏷️</div><div class="extra-title">Variantes / presentaciones</div><div class="extra-desc">Campo editable para ml, almacenamiento, tallas u otras presentaciones según el producto.</div></div>
+    <div class="extra-card"><div class="extra-icon">🔎</div><div class="extra-title">Buscador global en la tienda</div><div class="extra-desc">Barra de búsqueda visible al entrar, con resultados instantáneos de los 909 productos.</div></div>
+    <div class="extra-card"><div class="extra-icon">📱</div><div class="extra-title">Menú lateral + botón atrás</div><div class="extra-desc">Navegación tipo app nativa y corrección del comportamiento del botón atrás en iOS/Android.</div></div>
+    <div class="extra-card"><div class="extra-icon">👥</div><div class="extra-title">Banner de eventos y clientes</div><div class="extra-desc">Dos secciones nuevas 100% editables desde el panel, sin depender de programación.</div></div>
+  </div>
+
+  <div class="hosting-hero">
+    <div class="hosting-inner">
+      <div class="hosting-eyebrow">⭐ Beneficio exclusivo incluido</div>
+      <h2>2 años de hosting, dominio<br>y SSL. <em>Incluidos.</em></h2>
+      <p>Mientras el mercado tecnológico venezolano cobra hosting mensual desde el primer día y agrega costos ocultos de mantenimiento, tu plataforma tiene todos los servicios de infraestructura cubiertos por <strong style="color:#fff">24 meses completos</strong> dentro de la misma inversión.</p>
+      <div class="hosting-pills">
+        <div class="hosting-pill"><span class="dot"></span>Hosting en la nube</div>
+        <div class="hosting-pill"><span class="dot"></span>Dominio .com</div>
+        <div class="hosting-pill"><span class="dot"></span>SSL certificado</div>
+        <div class="hosting-pill"><span class="dot"></span>Mantenimiento continuo</div>
+        <div class="hosting-pill"><span class="dot"></span>Actualizaciones menores</div>
+        <div class="hosting-pill"><span class="dot"></span>Soporte directo Navi Group</div>
+      </div>
+      <div class="hosting-statement">
+        Ninguna empresa de tecnología en Venezuela incluye hosting por 2 años dentro de su cotización. El estándar del mercado es cobrar de <strong>$30 a $80 USD/mes</strong> desde el día del lanzamiento. Eso representa entre <strong>$720 y $1,920 USD adicionales</strong> que Natan Electronics <strong>no pagará en los próximos 24 meses.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-icon" style="background:#fef3c7">🔧</div>
+      <div><h3>Pendiente fuera de nuestro alcance</h3><p>Toda la cotización quedó entregada — esto depende del cliente</p></div>
+    </div>
+    <div style="padding: 8px 24px 16px">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><div class="step-title">Fotos de productos</div><div class="step-desc">Pendiente por parte del cliente: cargar la imagen de cada uno de los 952 productos desde el panel de administración.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Preparado por <strong>Navi Group Dev</strong> · davidcedenobrit@gmail.com · Julio 2026
+</div>
+
+</body>
+</html>

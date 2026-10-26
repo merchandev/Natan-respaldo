@@ -1,0 +1,22 @@
+name: Validar paquete VPS
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --omit=dev --ignore-scripts
+        working-directory: codigo-fuente
+      - run: node --test deploy/server.test.cjs
+      - run: node deploy/verify.mjs
+      - run: cp .env.example .env && docker compose config --quiet
+      - run: docker build -t natan-check .

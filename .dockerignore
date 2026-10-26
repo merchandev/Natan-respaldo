@@ -1,0 +1,10 @@
+*
+!codigo-fuente/
+!codigo-fuente/**
+!deploy/
+!deploy/server.cjs
+!Dockerfile
+**/node_modules
+**/.env
+**/.env.local
+**/.git

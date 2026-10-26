@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules/
+respaldo-restaurado/
+verificacion-respaldo/
+*.key
+*.key.txt
+*.decrypted.gz
+*.tmp
+datos/
+entrega-original/

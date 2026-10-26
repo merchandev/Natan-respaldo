@@ -1,0 +1,39 @@
+{
+  "format": "natan-jsonl-gzip-aes256gcm-v1",
+  "files": 2327,
+  "originalBytes": 259747257,
+  "iv": "PUWEG7F2Z0ZyKh8n",
+  "tag": "N8Kin27jvyV77Nab39QT2A==",
+  "parts": [
+    {
+      "file": "natan-001.enc",
+      "bytes": 47185920,
+      "sha256": "e3a6b92e964fe9dc12e641550f809a9433ea3a4bd428b0b58bc80f96ee58f0e3"
+    },
+    {
+      "file": "natan-002.enc",
+      "bytes": 47185920,
+      "sha256": "c158261c962be0dc17df5e9e6adbe1ea5c6a51090ba238fdb77183da8ae88bb0"
+    },
+    {
+      "file": "natan-003.enc",
+      "bytes": 47185920,
+      "sha256": "4204076e3908cc330314af413ed8e53a640c8c48e5a3384bed82a83433d42e50"
+    },
+    {
+      "file": "natan-004.enc",
+      "bytes": 47185920,
+      "sha256": "f4c3d98ee87cf4acb9b89b3c9364c48de8fd0676de1d940b52183310493c7590"
+    },
+    {
+      "file": "natan-005.enc",
+      "bytes": 47185920,
+      "sha256": "f8f26d425e5828248107fc13f803a5d058b7768b5d0a5f30c9708887f597bad4"
+    },
+    {
+      "file": "natan-006.enc",
+      "bytes": 8749313,
+      "sha256": "cecc7d4e3f27c1cb1563211cf2a850fa0169d8c7b93a2eb8feff00fcfb4878f4"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api_d3xd/check_status.php", "destination": "/api/d3xd/check-status" },
+    { "source": "/api_d3xd/configuracion.php", "destination": "/api/d3xd/configuracion" },
+    { "source": "/api_d3xd/settings.php", "destination": "/api/d3xd/configuracion" },
+    { "source": "/api_d3xd/guardar_productos.php", "destination": "/api/d3xd/guardar-productos" },
+    { "source": "/api_d3xd/actualizar_precios_stock.php", "destination": "/api/d3xd/actualizar-precios-stock" },
+    { "source": "/api_d3xd/consultar_productos.php", "destination": "/api/d3xd/consultar-productos" },
+    { "source": "/api_d3xd/borrar_productos.php", "destination": "/api/d3xd/borrar-productos" },
+    { "source": "/api_d3xd/consultar_pedidos.php", "destination": "/api/d3xd/consultar-pedidos" },
+    { "source": "/api_d3xd/borrar_pedido.php", "destination": "/api/d3xd/borrar-pedido" },
+    { "source": "/api_d3xd/productos.php", "destination": "/api/d3xd/guardar-productos" },
+    { "source": "/api_d3xd/:ruta*", "destination": "/api/d3xd/ruta-desconocida" }
+  ]
+}
