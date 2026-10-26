@@ -4,7 +4,13 @@ Fecha: 26 de octubre de 2026. Se conservó el código original; los hallazgos si
 
 ## Arquitectura y adaptación
 
-La aplicación contiene HTML/JavaScript sin compilación, funciones CommonJS para Vercel, una dependencia `crypto-js` y Supabase REST/Auth/Storage. El nuevo adaptador usa Node 24 para servir los mismos HTML e invocar las mismas funciones. Caddy actúa como proxy y puede emitir HTTPS cuando el dominio está configurado.
+La aplicación contiene HTML/JavaScript sin compilación, funciones CommonJS para Vercel, una dependencia `crypto-js` y Supabase REST/Auth/Storage. El adaptador usa Node 24 para servir los mismos HTML e invocar las mismas funciones. El Compose actual publica únicamente el puerto configurable 18091 directamente al contenedor. No instala un proxy ni toca Traefik.
+
+### Ajuste para el VPS compartido
+
+El primer intento en Hostinger construyó y arrancó la aplicación, pero falló al montar `deploy/Caddyfile`: el archivo no estaba disponible como archivo en el directorio de ejecución `/docker/natan`. Se eliminó el servicio Caddy y el montaje; también se eliminó la dependencia obligatoria de `.env`, usando variables explícitas de Compose compatibles con el panel.
+
+El proyecto predeterminado es `natan-respaldo`, separado de `natan-electronics`. No utiliza IP fija ni redes externas, volúmenes del host o nombres globales de contenedor. Traefik queda deshabilitado para este contenedor y no se publican 80/443. El puerto 18091 no figura entre los publicados en la captura; su disponibilidad real debe verificarse en el VPS. El contenedor tiene límites de CPU, memoria y procesos, pero la construcción de la imagen también consume recursos.
 
 El archivo llamado `push pull up.json` contiene las reglas de rutas que Vercel esperaría en `vercel.json`. El adaptador lee ese archivo tal cual. Los directorios SQL se llaman `basededatos/`, aunque el README original menciona `supabase/`. Dentro del ZIP de entrega sí están los nombres originales `vercel.json` y `supabase/`, así como `.github/workflows/update-bcv.yml`, que falta en la carpeta extraída. Al normalizar esos nombres, los archivos compartidos por ZIP y carpeta son idénticos. Se preservó el ZIP entero en el respaldo cifrado.
 
@@ -48,6 +54,6 @@ La copia de código publicada fuera del respaldo es idéntica a la recibida; los
 
 ## Resultado y alcance de las pruebas
 
-Se construyó la imagen Docker, se validó Compose/Caddy, se probó el adaptador HTTP con servicios externos simulados, se comprobó la sintaxis y se restauraron SQL y cifrado localmente. El manifiesto `INVENTARIO.json` permite detectar cambios en los originales.
+Se construyó la imagen Docker, se validó el Compose independiente sin archivos externos, se probó el adaptador HTTP con servicios externos simulados, se comprobó la sintaxis y se restauraron SQL y cifrado localmente. El manifiesto `INVENTARIO.json` permite detectar cambios en los originales.
 
 La puesta en servicio en Hostinger, HTTPS del dominio real, login del panel, carga de fotos con Auth real y conexión BNC/D3xD necesitan credenciales del propietario. No se afirma una validación de producción sin esas credenciales.

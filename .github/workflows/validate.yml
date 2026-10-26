@@ -18,5 +18,16 @@ jobs:
         working-directory: codigo-fuente
       - run: node --test deploy/server.test.cjs
       - run: node deploy/verify.mjs
-      - run: cp .env.example .env && docker compose config --quiet
-      - run: docker build -t natan-check .
+      - run: node --test deploy/compose.test.mjs
+      - run: docker compose -p natan-ci up -d --build --wait --wait-timeout 90
+        env:
+          NATAN_BIND_ADDRESS: 127.0.0.1
+          NATAN_HTTP_PORT: '18091'
+      - name: Comprobar tienda, panel y salud
+        run: |
+          curl --fail --silent http://127.0.0.1:18091/healthz
+          curl --fail --silent --output /dev/null http://127.0.0.1:18091/
+          curl --fail --silent --output /dev/null http://127.0.0.1:18091/admin
+      - name: Limpiar solo los contenedores de esta prueba
+        if: always()
+        run: docker compose -p natan-ci down
